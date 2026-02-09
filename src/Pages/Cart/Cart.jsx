@@ -1,6 +1,6 @@
 import { useContext, useRef } from "react";
 import "./Cart.css";
-import { StoreContext } from "../../Context/Storecontext";
+import { StoreContext } from "../../Context/StoreContext";
 import { useNavigate } from "react-router-dom";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { PiHandsClappingFill } from "react-icons/pi";

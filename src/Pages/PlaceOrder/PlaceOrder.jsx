@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import './PlaceOrder.css'
-import { StoreContext } from '../../Context/Storecontext'
+import { StoreContext } from '../../Context/StoreContext'
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js'
 
 const PlaceOrder = () => {
