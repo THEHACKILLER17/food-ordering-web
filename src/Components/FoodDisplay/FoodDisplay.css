@@ -1,0 +1,32 @@
+.food-display{
+    margin-top: 30px;
+}
+.food-display span{
+    font-size: max(2vw, 24px);
+}
+.search{
+    position: relative;
+    display: flex;
+    float: right;
+}
+.search .search_input{
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 14px;
+    outline: none;
+}
+.search img{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 25px;
+    cursor: pointer;
+}
+.food-display-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+    margin-top: 30px;
+    gap: 30px;
+    row-gap: 50px;
+}
