@@ -34,6 +34,7 @@ const Cart = () => {
 
   const cartItems = getCartItemsDetailed();
   const discountAmount = getDiscountAmount();
+  const isDiabled = getFinalAmount() === 0;
 
   return (
     <div className="cart">
@@ -126,7 +127,7 @@ const Cart = () => {
           </div>
           <hr />
 
-          <button onClick={() => navigate("/order")}>
+          <button disabled={isDiabled} onClick={() => navigate("/order")}>
             PROCEED TO CHECKOUT
           </button>
         </div>

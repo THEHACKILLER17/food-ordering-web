@@ -5,11 +5,9 @@ import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js'
 
 const PlaceOrder = () => {
 
-  const {getTotalCartAmount, getDiscountAmount, getFinalAmount} = useContext(StoreContext)
+  const {getTotalCartAmount, getDiscountAmount, getFinalAmount, getDeliveryFee} = useContext(StoreContext)
   const [paymentSuccess, setPaymentSuccess] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState('paypal')
-
-  const totalAmount = getTotalCartAmount() + 2
 
   return (
     <PayPalScriptProvider options={{ "client-id": "test" }}>
@@ -44,7 +42,7 @@ const PlaceOrder = () => {
                 <hr />
                 <div className="cart-total-details">
                   <p>Delivery Fee</p>
-                  <p>${2}</p>
+                  <p>${getDeliveryFee()}</p>
                 </div>
                 <hr />
                 <div className="cart-total-details">

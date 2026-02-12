@@ -48,6 +48,10 @@
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+.cart-bottom button:disabled{
+    cursor: not-allowed;
+    opacity: 0.6;
+}
 .cart-total{
     flex: 1;
     display: flex;
