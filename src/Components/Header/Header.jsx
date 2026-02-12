@@ -4,8 +4,8 @@ const Header = () => {
     <div className='header'>
       <div className="header-contents">
         <h2>Order Your Favourite Food Here</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto dolorum cumque cupiditate a odio, magnam laborum autem, delectus accusantium veritatis numquam unde sapiente veniam recusandae non dolor vel nemo tempore!</p>
-        <button>View Menu</button>
+        <p>Tomato is a fast and reliable food delivery platform that connects you with your favorite local restaurants in minutes. Browse, order, and enjoy fresh meals delivered straight to your door.</p>
+        <button><a href="#explore-menu">View Menu</a></button>
       </div>
     </div>
   )

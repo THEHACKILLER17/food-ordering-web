@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="footer-content">
             <div className="footer-content-left">
                 <img src={assets.logo} alt="" />
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem, natus! Quasi maxime ducimus quae sed ipsa dolore omnis magnam, minus necessitatibus accusantium, incidunt eligendi minima saepe, possimus facilis ea ex?</p>
+                <p>Tomato delivers fresh meals to your doorstep quickly and reliably.</p>
                 <div className="footer-social-icons">
                     <img src={assets.facebook_icon} alt="" />
                     <img src={assets.twitter_icon} alt="" />
@@ -27,7 +27,7 @@ const Footer = () => {
             <div className="footer-content-right">
                 <h2>GET IN TOUCH</h2>
                 <ul>
-                    <li>+91 123-4567-890</li>
+                    <li>+91 86690 16756</li>
                     <li>contact@tomato.com</li>
                 </ul>
             </div>
