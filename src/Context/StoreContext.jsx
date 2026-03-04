@@ -35,7 +35,7 @@ const StoreContextProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
-  // ye do state search ke liye hain
+  // ye state search ke liye hain
   const [searchQuery, setSearchQuery] = useState("");
 
   // local storage mein cart items save karenge jab bhi cartItems change ho
@@ -155,6 +155,7 @@ const StoreContextProvider = ({ children }) => {
 
     addToCart: (id) => dispatch({ type: "ADD_TO_CART", payload: id }),
     removeFromCart: (id) => dispatch({ type: "REMOVE_FROM_CART", payload: id }),
+    deleteCompletly: (id) => dispatch({ type: "DELETE_FROM_CART", payload: id }),
     clearCart: () => dispatch({ type: "CLEAR_CART" }),
 
     searchQuery,

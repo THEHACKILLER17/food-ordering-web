@@ -8,6 +8,7 @@ const LoginPopup = ({ setShowLogin }) => {
 
     const { url, setToken, setUser } = useContext(StoreContext)
     const [currState, setCurrState] = useState("Login")
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const [data, setData] = useState({
         name: "",
         email: "",
@@ -22,6 +23,7 @@ const LoginPopup = ({ setShowLogin }) => {
 
     const onLogin = async (event) => {
         event.preventDefault()
+        if (isSubmitting) return
 
         let newUrl = url
         if (currState === "Login") {
@@ -31,6 +33,7 @@ const LoginPopup = ({ setShowLogin }) => {
         }
 
         try {
+            setIsSubmitting(true)
             const response = await axios.post(newUrl, data)
 
             if (response.data.success) {
@@ -46,15 +49,17 @@ const LoginPopup = ({ setShowLogin }) => {
         } catch (error) {
             console.error("Auth error:", error)
             alert("Something went wrong. Please try again.")
+        } finally {
+            setIsSubmitting(false)
         }
     }
 
     return (
         <div className='login-popup'>
-            <form onSubmit={onLogin} className="login-popup-container">
+            <form onSubmit={onLogin} className="login-popup-container" aria-busy={isSubmitting}>
                 <div className="login-popup-title">
                     <h2>{currState}</h2>
-                    <img onClick={() => setShowLogin(false)} src={assets.cross_icon} alt="" />
+                    <img onClick={() => !isSubmitting && setShowLogin(false)} src={assets.cross_icon} alt="" />
                 </div>
                 <div className="login-popup-inputs">
                     {currState === "Login" ? <></> :
@@ -64,6 +69,7 @@ const LoginPopup = ({ setShowLogin }) => {
                             value={data.name}
                             type="text"
                             placeholder='Your name'
+                            disabled={isSubmitting}
                             required
                         />
                     }
@@ -73,6 +79,7 @@ const LoginPopup = ({ setShowLogin }) => {
                         value={data.email}
                         type="email"
                         placeholder='Your email'
+                        disabled={isSubmitting}
                         required
                     />
                     <input
@@ -81,17 +88,22 @@ const LoginPopup = ({ setShowLogin }) => {
                         value={data.password}
                         type="password"
                         placeholder='Password'
+                        disabled={isSubmitting}
                         required
                     />
                 </div>
-                <button type="submit">{currState === "Sign Up" ? "Create Account" : "Login"}</button>
+                <button type="submit" disabled={isSubmitting}>
+                    {isSubmitting
+                        ? (currState === "Sign Up" ? "Creating account..." : "Logging in...")
+                        : (currState === "Sign Up" ? "Create Account" : "Login")}
+                </button>
                 <div className="login-popup-condition">
-                    <input style={{ marginTop: 5 }} type="checkbox" required />
+                    <input style={{ marginTop: 5 }} type="checkbox" disabled={isSubmitting} required />
                     <p>By continuing, i agree to the terms of use & privacy policy.</p>
                 </div>
                 {currState === "Login"
-                    ? <p>Create a new account? <span onClick={() => setCurrState("Sign Up")}>Click here</span></p>
-                    : <p>Already have an account?<span onClick={() => setCurrState("Login")}>Login here</span></p>}
+                    ? <p>Create a new account? <span onClick={() => !isSubmitting && setCurrState("Sign Up")}>Click here</span></p>
+                    : <p>Already have an account?<span onClick={() => !isSubmitting && setCurrState("Login")}>Login here</span></p>}
 
 
             </form>

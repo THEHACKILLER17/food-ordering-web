@@ -106,6 +106,12 @@
     border-radius: 4px;
     cursor: pointer;
 }
+.recommended{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
 .cart-promocode{
     flex: 1;
 }

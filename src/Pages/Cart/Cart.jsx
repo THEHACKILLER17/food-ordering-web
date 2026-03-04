@@ -4,13 +4,16 @@ import { StoreContext } from "../../Context/StoreContext";
 import { useNavigate } from "react-router-dom";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { PiHandsClappingFill } from "react-icons/pi";
+import FoodItem from "../../Components/FoodItem/FoodItem";
 
-const Cart = () => {
+const Cart = ({category}) => {
   const {
     getCartItemsDetailed,
     addToCart,
     removeFromCart,
     clearCart,
+    deleteCompletly,
+    getFilteredFoodList,
     getTotalCartAmount,
     getDeliveryFee,
     getFinalAmount,
@@ -31,6 +34,14 @@ const Cart = () => {
       buttonRef.current.click();
     }
   };
+
+  const recommended =
+  category === "All"
+    ? getFilteredFoodList().slice(0,3)
+    : getFilteredFoodList()
+        // .filter(item => item.category === category)
+        .sort(()=> 0.5 - Math.random())
+        .slice(0,3);
 
   const cartItems = getCartItemsDetailed();
   const discountAmount = getDiscountAmount();
@@ -64,7 +75,7 @@ const Cart = () => {
                   <span onClick={() => addToCart(item._id)}>+</span>
                 </p>
                 <p>{item.totalPrice}</p>
-                <p onClick={() => removeFromCart(item._id)} className="cross">
+                <p onClick={() => deleteCompletly(item._id)} className="cross">
                   X
                 </p>
               </div>
@@ -90,9 +101,27 @@ const Cart = () => {
             Clear Cart
           </button>
         </div> : null
-        }
-        
+        } 
       </div>
+
+       <br/> 
+      {recommended.length > 0 && (
+        <>
+          <h3>Recommended for you</h3>
+          <div className="recommended">
+            {recommended.map(item => (
+              <FoodItem
+                key={item._id}
+                id={item._id}
+                name={item.name}
+                description={item.description}
+                price={item.price}
+                image={item.image}
+              />
+            ))}
+          </div>
+        </>
+      )}
 
       {/* CART SUMMARY */}
       <div className="cart-bottom">
