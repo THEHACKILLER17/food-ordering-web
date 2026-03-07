@@ -11,7 +11,7 @@ const FoodItem = ({id,name,description,price,image}) => {
   return (
     <div className='food-item'>
         <div className="food-item-img-container">
-            <img className='food-item-image' src={image} alt="" />
+            <img className='food-item-image' src={image} alt="Loading..." />
             {!cartItems 
             ? <img className='add' onClick={()=>addToCart(id)} src={assets.add_icon_white} alt="" />
             : <div className="food-item-counter">
@@ -27,7 +27,7 @@ const FoodItem = ({id,name,description,price,image}) => {
                 <img src={assets.rating_starts} alt="" />
             </div>
             <p className='food-item-desc'> {description} </p>
-            <p className='food-item-price'> ${price} </p>
+            <p className='food-item-price'> ₹{price} </p>
         </div>
     </div>
   )

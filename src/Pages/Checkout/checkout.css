@@ -1,0 +1,129 @@
+.checkout-page {
+  margin-top: 100px;
+}
+
+.checkout-page .place-order {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.checkout-page .place-order-left {
+  width: 100%;
+  max-width: max(30%, 500px);
+}
+
+.checkout-page .place-order-left .title {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.checkout-page .place-order-left input {
+  margin-bottom: 15px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #c5c5c5;
+  border-radius: 5px;
+  outline-color: tomato;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.checkout-page .place-order-left input:focus {
+  border-color: tomato;
+  box-shadow: 0 0 0 3px rgba(255, 99, 71, 0.15);
+}
+
+.checkout-page .place-order-left .multi-fields {
+  display: flex;
+  gap: 10px;
+}
+
+.checkout-page .place-order-right {
+  width: 100%;
+  max-width: max(40%, 400px);
+  padding: 24px;
+  border: 1px solid #ececec;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.checkout-page .cart-total h2 {
+  margin: 0 0 20px;
+}
+
+.checkout-page .cart-total-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.checkout-page .cart-total hr {
+  border: none;
+  border-top: 1px solid #efefef;
+}
+
+.checkout-page .payment-method {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkout-page .payment-method h3 {
+  margin: 0 0 6px;
+}
+
+.checkout-page .payment-method label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.checkout-page .payment-method input[type="radio"] {
+  accent-color: tomato;
+}
+
+.checkout-page .checkout-submit-btn {
+  margin-top: 20px;
+  width: 100%;
+  border: none;
+  color: white;
+  background: tomato;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.checkout-page .checkout-submit-btn:hover:not(:disabled) {
+  background: #e14e32;
+  transform: translateY(-1px);
+}
+
+.checkout-page .checkout-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+  .checkout-page {
+    margin-top: 50px;
+  }
+
+  .checkout-page .place-order {
+    flex-direction: column;
+  }
+
+  .checkout-page .place-order-left,
+  .checkout-page .place-order-right {
+    max-width: 100%;
+  }
+}

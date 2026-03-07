@@ -1,14 +1,13 @@
-import { createContext, useEffect, useReducer, useState } from "react";
+import { createContext, useCallback, useEffect, useReducer, useState } from "react";
 import axios from "axios";
 import cartReducer from "./cartReducer";
 import storageService from "./storageService";
 import { applyPromo, calculateTotal, validatePromo } from "./cartService";
-import { food_list } from "../assets/assets";
 
 export const StoreContext = createContext(null);
 
 // Backend URL
-const url = "http://localhost:4000";
+const url = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
 
 // ye function add to cart, remove from cart, clear cart aur local storage ka kaam karega
 const StoreContextProvider = ({ children }) => {
@@ -37,29 +36,56 @@ const StoreContextProvider = ({ children }) => {
 
   // ye state search ke liye hain
   const [searchQuery, setSearchQuery] = useState("");
+  const [foodList, setFoodList] = useState([]);
+  const [foodLoading, setFoodLoading] = useState(true);
+  const [foodError, setFoodError] = useState("");
+
+  const fetchFoodList = useCallback(async () => {
+    try {
+      setFoodLoading(true);
+      setFoodError("");
+      const response = await axios.get(`${url}/api/food/list`);
+
+      if (response.data?.success) {
+        setFoodList(response.data.data || []);
+      } else {
+        setFoodError(response.data?.message || "Failed to fetch foods.");
+      }
+    } catch (error) {
+      setFoodError(
+        error.response?.data?.message ||
+          "Unable to connect to food service. Please try again.",
+      );
+    } finally {
+      setFoodLoading(false);
+    }
+  }, [url]);
 
   // local storage mein cart items save karenge jab bhi cartItems change ho
   useEffect(() => {
     storageService.saveCart(cartItems);
   }, [cartItems]);
 
+  useEffect(() => {
+    fetchFoodList();
+  }, [fetchFoodList]);
+
   // total cart amount calculate karenge
   const getTotalCartAmount = () => {
-    return calculateTotal(cartItems, food_list);
+    return calculateTotal(cartItems, foodList);
   };
 
   // filtered food list based on search query
-  const getFilteredFoodList = () => {
-    const query = searchQuery.trim().toLowerCase();
+ const getFilteredFoodList = () => {
+  const query = searchQuery.trim().toLowerCase();
 
-    if (!query) return food_list;
+  return foodList.filter((item) => {
+    const name = item.name?.toLowerCase() || "";
+    const desc = item.description?.toLowerCase() || "";
 
-    return food_list.filter(
-      (item) =>
-        item.name.toLowerCase().includes(query) ||
-        item.description.toLowerCase().includes(query),
-    );
-  };
+    return name.includes(query) || desc.includes(query);
+  });
+};
 
   // quantity sirf ek item ke liye return karega
   const getItemQuantity = (id) => {
@@ -68,7 +94,7 @@ const StoreContextProvider = ({ children }) => {
 
   // delivery fee calculate karenge
   const getDeliveryFee = () => {
-    return getTotalCartAmount() === 0 ? 0 : 2;
+    return getTotalCartAmount() === 0 ? 0 : 99;
   };
 
   // total cart amount calculate karenge
@@ -81,7 +107,7 @@ const StoreContextProvider = ({ children }) => {
 
   // cart items ke detailed list return karega
   const getCartItemsDetailed = () => {
-    return food_list
+    return foodList
       .filter((item) => cartItems[item._id] > 0)
       .map((item) => ({
         ...item,
@@ -145,12 +171,15 @@ const StoreContextProvider = ({ children }) => {
 
   const contextValue = {
     url,
+    fetchFoodList,
+    foodLoading,
+    foodError,
     token,
     setToken,
     user,
     setUser,
     logout,
-    food_list,
+    food_list: foodList,
     cartItems,
 
     addToCart: (id) => dispatch({ type: "ADD_TO_CART", payload: id }),

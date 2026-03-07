@@ -1,6 +1,3 @@
-import { food_list } from "../assets/assets";
-import cart from "../Pages/Cart/Cart";
-
 export const calculateTotal = (cart, food_list) => {
     return Object.entries(cart).reduce((total, [id, qty]) => {
         const item = food_list.find(food => food._id === id);
@@ -9,8 +6,8 @@ export const calculateTotal = (cart, food_list) => {
 };
 
 export const promoStrategies = {
-  SAVE5: { minTotal: 50, discount: 5 },
-  SAVE10: { minTotal: 100, discount: 10 },
+  SAVE50: { minTotal: 500, discount: 50 },
+  SAVE100: { minTotal: 1000, discount: 100 },
 };
 
 export const validatePromo = (code, total) => {

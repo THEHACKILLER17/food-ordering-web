@@ -5,7 +5,7 @@ import FoodItem from "../FoodItem/FoodItem";
 import { assets } from "../../assets/assets";
 
 const FoodDisplay = ({ category }) => {
-  const { getFilteredFoodList, searchQuery, setSearchQuery } =
+  const { getFilteredFoodList, searchQuery, setSearchQuery, foodLoading, foodError } =
     useContext(StoreContext);
 
   const productsToShow = getFilteredFoodList();
@@ -14,12 +14,12 @@ const FoodDisplay = ({ category }) => {
   const [visibleCount, setVisibleCount] = useState(5)
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 800);
+    setLoading(foodLoading);
+  }, [foodLoading]);
 
-    return () => clearTimeout(timer);
-  }, []);
+  useEffect(() => {
+    setVisibleCount(5);
+  }, [searchQuery, category]);
 
   useEffect(() => {
   const handleScroll = () => {
@@ -54,10 +54,12 @@ const FoodDisplay = ({ category }) => {
           Array(8)
             .fill(0)
             .map((_, i) => <div key={i} className="skeleton-card"></div>)
-        ) : productsToShow.length > 0 ? (
-          productsToShow.slice(0, visibleCount).map((item) => {
-            if (category === "All" || category === item.category) {
-              return (
+        ) : foodError ? (
+          <p className="no-results">{foodError}</p>
+        ) : productsToShow.length > 0 ? productsToShow
+              .filter((item) => category === "All" || item.category === category)
+              .slice(0, visibleCount)
+              .map((item) => (
                 <FoodItem
                   key={item._id}
                   id={item._id}
@@ -66,11 +68,8 @@ const FoodDisplay = ({ category }) => {
                   price={item.price}
                   image={item.image}
                 />
-              );
-            }
-            return null;
-          })
-        ) : (
+              ))
+              : (
           <p className="no-results">No results found for "{searchQuery}"</p>
         )}
       </div>

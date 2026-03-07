@@ -4,16 +4,15 @@ import { StoreContext } from "../../Context/StoreContext";
 import { useNavigate } from "react-router-dom";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { PiHandsClappingFill } from "react-icons/pi";
-import FoodItem from "../../Components/FoodItem/FoodItem";
+import Recommended from "../components/recommended";
 
-const Cart = ({category}) => {
+const Cart = () => {
   const {
     getCartItemsDetailed,
     addToCart,
     removeFromCart,
     clearCart,
     deleteCompletly,
-    getFilteredFoodList,
     getTotalCartAmount,
     getDeliveryFee,
     getFinalAmount,
@@ -35,14 +34,6 @@ const Cart = ({category}) => {
     }
   };
 
-  const recommended =
-  category === "All"
-    ? getFilteredFoodList().slice(0,3)
-    : getFilteredFoodList()
-        // .filter(item => item.category === category)
-        .sort(()=> 0.5 - Math.random())
-        .slice(0,3);
-
   const cartItems = getCartItemsDetailed();
   const discountAmount = getDiscountAmount();
   const isDiabled = getFinalAmount() === 0;
@@ -54,9 +45,9 @@ const Cart = ({category}) => {
         <div className="cart-items-title">
           <p>Items</p>
           <p>Title</p>
-          <p>Price ($)</p>
+          <p>Price (₹)</p>
           <p>Quantity</p>
-          <p>Total ($)</p>
+          <p>Total (₹)</p>
           <p>Remove</p>
         </div>
         <br />
@@ -104,24 +95,7 @@ const Cart = ({category}) => {
         } 
       </div>
 
-       <br/> 
-      {recommended.length > 0 && (
-        <>
-          <h3>Recommended for you</h3>
-          <div className="recommended">
-            {recommended.map(item => (
-              <FoodItem
-                key={item._id}
-                id={item._id}
-                name={item.name}
-                description={item.description}
-                price={item.price}
-                image={item.image}
-              />
-            ))}
-          </div>
-        </>
-      )}
+        <Recommended />
 
       {/* CART SUMMARY */}
       <div className="cart-bottom">
@@ -130,13 +104,13 @@ const Cart = ({category}) => {
 
           <div className="cart-total-details">
             <p>Subtotal</p>
-            <p>${getTotalCartAmount()}</p>
+            <p>₹{getTotalCartAmount()}</p>
           </div>
           <hr />
 
           <div className="cart-total-details">
             <p>Delivery Fee</p>
-            <p>${getDeliveryFee()}</p>
+            <p>₹{getDeliveryFee()}</p>
           </div>
           <hr />
 
@@ -144,7 +118,7 @@ const Cart = ({category}) => {
             <>
               <div className="cart-total-details">
                 <p>Promo Discount <button className="promoBtn" onClick={() => { promoBtn() }}>X</button></p>
-                <p>- ${discountAmount}</p>
+                <p>- ₹{discountAmount}</p>
               </div>
               <hr />
             </>
@@ -152,7 +126,7 @@ const Cart = ({category}) => {
 
           <div className="cart-total-details">
             <p>Total</p>
-            <p>${getFinalAmount()}</p>
+            <p>₹{getFinalAmount()}</p>
           </div>
           <hr />
 
@@ -186,11 +160,11 @@ const Cart = ({category}) => {
                 
                 <p>
                   <IoInformationCircleOutline size={20} />
-                  Use code <span>SAVE5</span> to get $5 off, on Above $50.
+                  Use code <span>SAVE50</span> to get ₹50 off, on Above ₹500.
                 </p>
                 <p>
                   <IoInformationCircleOutline size={20} />
-                  Use code <span>SAVE10</span> to get $10 off, on Above $100.
+                  Use code <span>SAVE100</span> to get ₹100 off, on Above ₹1000.
                 </p>
               </div>
               
@@ -198,7 +172,7 @@ const Cart = ({category}) => {
               <>
                 <PiHandsClappingFill size={20} />
                 <p>
-                  Congratulations! You saved <span>${discountAmount}</span> on your order.
+                  Congratulations! You saved <span>₹{discountAmount}</span> on your order.
                 </p>
               </>
             )}
