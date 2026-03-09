@@ -1,57 +1,78 @@
-.header{
-    height: 35vw;
-    margin: 30px auto;
-    background:  url('../../assets/header_img.png') no-repeat;
-    background-size: cover;
-    position: relative;
-    border-radius: 10px;
-}
-.header-contents{
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 1.5vw;
-    max-width: 50%;
-    bottom: 10%;
-    left: 6vh;
-}
-.header-contents h2{
-    font-weight: 500;
-    color: white;
-    font-size: max(4.3vw, 22px);
-}
-.header-contents p{
-    color: white;
-    font-size: 1vw;
-}.header-contents button{
-    border: none;
-    background-color: white;
-    font-size: max(1vw, 13px);
-    border-radius: 50px;
-    padding: 1vw 2.3vw;
-    color: #747474;
-    font-weight: 500;
-    animation: fadeIn 3s;
+.header {
+  height: 35vw;
+  min-height: 220px;
+  margin: 30px auto;
+  background: url('../../assets/header_img.png') no-repeat center center;
+  background-size: cover;
+  position: relative;
+  border-radius: 10px;
 }
 
-@media (max-width:1050px) {
-    .header{
-        height: 28vw;
-    }
-    .header-contents{
-        max-width: 45%;
-    }
+.header-contents {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: clamp(8px, 1.5vw, 20px);
+  max-width: 50%;
+  bottom: 10%;
+  left: 6%;
 }
 
-@media (max-width:750px) {
-    .header-contents{
-        max-width: 45%;
-    }
-    .header-contents p{
-        display: none;
-    }
-    .header-contents button{
-        padding: 2vw 4vw;
-    }
+.header-contents h2 {
+  font-weight: 500;
+  color: white;
+  font-size: clamp(18px, 4.3vw, 52px); /* ← the fix */
+  line-height: 1.2;
+}
+
+.header-contents p {
+  color: white;
+  font-size: clamp(12px, 1vw, 16px); /* ← was unreadable small */
+  line-height: 1.5;
+}
+
+.header-contents button {
+  border: none;
+  background-color: white;
+  font-size: clamp(12px, 1vw, 16px);
+  border-radius: 50px;
+  padding: clamp(8px, 1vw, 14px) clamp(16px, 2.3vw, 28px);
+  color: #747474;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.header-contents button a {
+  text-decoration: none;
+  color: inherit;
+}
+
+@media (max-width: 750px) {
+  .header {
+    height: 45vw;
+    min-height: 180px;
+  }
+
+  .header-contents {
+    max-width: 60%;
+    left: 4%;
+    bottom: 8%;
+  }
+
+  .header-contents p {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    height: 55vw;
+    min-height: 160px;
+    border-radius: 6px;
+  }
+
+  .header-contents {
+    max-width: 75%;
+  }
 }

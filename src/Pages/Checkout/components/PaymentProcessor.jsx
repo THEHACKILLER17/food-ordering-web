@@ -5,31 +5,21 @@ import useCheckout from "../hooks/useCheckout";
 
 const PaymentProcessor = () => {
   const { getFinalAmount } = useContext(StoreContext);
-
-  const { paymentMethod, validate } = useCheckout();
+  const { paymentMethod, validate, setOrderStatus } = useCheckout();
 
   const handlePayment = async () => {
     const validation = validate();
-
-    if (!validation.valid) {
-      alert(validation.message);
-      return;
-    }
+    if (!validation.valid) { alert(validation.message); return; }
 
     const strategy = getPaymentStrategy(paymentMethod);
 
     try {
       const result = await strategy.process(getFinalAmount());
-
-      if (result?.redirected) {
-        return;
-      }
-
-      alert("Order placed successfully");
+      if (result?.redirected) return;
+      setOrderStatus("success"); // ← this triggers confirmation
     } catch (error) {
       alert(error?.message || "Payment failed. Please try again.");
     }
-
   };
 
   return (
