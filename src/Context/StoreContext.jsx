@@ -7,7 +7,7 @@ import { applyPromo, calculateTotal, validatePromo } from "./cartService";
 export const StoreContext = createContext(null);
 
 // Backend URL
-const url = import.meta.env.VITE_BACKEND_URL || "https://tomato-backend-rz14.onrender.com";
+const url = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
 
 // ye function add to cart, remove from cart, clear cart aur local storage ka kaam karega
 const StoreContextProvider = ({ children }) => {
