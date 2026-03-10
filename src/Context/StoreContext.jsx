@@ -1,4 +1,10 @@
-import { createContext, useCallback, useEffect, useReducer, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import axios from "axios";
 import cartReducer from "./cartReducer";
 import storageService from "./storageService";
@@ -76,16 +82,16 @@ const StoreContextProvider = ({ children }) => {
   };
 
   // filtered food list based on search query
- const getFilteredFoodList = () => {
-  const query = searchQuery.trim().toLowerCase();
+  const getFilteredFoodList = () => {
+    const query = searchQuery.trim().toLowerCase();
 
-  return foodList.filter((item) => {
-    const name = item.name?.toLowerCase() || "";
-    const desc = item.description?.toLowerCase() || "";
+    return foodList.filter((item) => {
+      const name = item.name?.toLowerCase() || "";
+      const desc = item.description?.toLowerCase() || "";
 
-    return name.includes(query) || desc.includes(query);
-  });
-};
+      return name.includes(query) || desc.includes(query);
+    });
+  };
 
   // quantity sirf ek item ke liye return karega
   const getItemQuantity = (id) => {
@@ -93,11 +99,11 @@ const StoreContextProvider = ({ children }) => {
   };
 
   // delivery fee calculate karenge
- const getDeliveryFee = () => {
-  const total = getTotalCartAmount();
-  if (total === 0) return 0;
-  return total >= 999 ? 0 : 99;
-};
+  const getDeliveryFee = () => {
+    const total = getTotalCartAmount();
+    if (total === 0) return 0;
+    return total >= 999 ? 0 : 99;
+  };
 
   // total cart amount calculate karenge
   const getFinalAmount = () => {
@@ -186,7 +192,8 @@ const StoreContextProvider = ({ children }) => {
 
     addToCart: (id) => dispatch({ type: "ADD_TO_CART", payload: id }),
     removeFromCart: (id) => dispatch({ type: "REMOVE_FROM_CART", payload: id }),
-    deleteCompletly: (id) => dispatch({ type: "DELETE_FROM_CART", payload: id }),
+    deleteCompletly: (id) =>
+      dispatch({ type: "DELETE_FROM_CART", payload: id }),
     clearCart: () => dispatch({ type: "CLEAR_CART" }),
 
     searchQuery,

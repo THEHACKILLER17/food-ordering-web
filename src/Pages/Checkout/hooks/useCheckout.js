@@ -26,6 +26,7 @@ export default function useCheckout() {
 
   return {
     address,
+    setAddress,
     updateAddress,
     paymentMethod,
     setPaymentMethod,
