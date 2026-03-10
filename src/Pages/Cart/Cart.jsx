@@ -1,10 +1,10 @@
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import "./Cart.css";
 import { StoreContext } from "../../Context/StoreContext";
-import { useNavigate } from "react-router-dom";
-import { IoInformationCircleOutline } from "react-icons/io5";
-import { PiHandsClappingFill } from "react-icons/pi";
 import Recommended from "../components/Recommended";
+import PromoCode from "../components/PromoCode";
+import CartSummary from "../components/CartSummary";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const {
@@ -13,30 +13,11 @@ const Cart = () => {
     removeFromCart,
     clearCart,
     deleteCompletly,
-    getTotalCartAmount,
-    getDeliveryFee,
-    getFinalAmount,
-    getDiscountAmount,
-    applyPromoCode,
-    promoInput,
-    promoBtn,
-    isApplyDisabled,
-    handleInputChange,
   } = useContext(StoreContext);
 
-  const navigate = useNavigate();
-
-  const buttonRef = useRef(null);
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !isApplyDisabled) {
-      e.preventDefault();
-      buttonRef.current.click();
-    }
-  };
-
   const cartItems = getCartItemsDetailed();
-  const discountAmount = getDiscountAmount();
-  const isDiabled = getFinalAmount() === 0;
+
+  const navigate = useNavigate();
 
   return (
     <div className="cart">
@@ -76,108 +57,31 @@ const Cart = () => {
         ) : (
           <div className="empty-cart-container">
             <p className="empty-cart">Your cart is empty</p>
-            <button className="contBtn"
-             onClick={() => navigate("/")}>Continue Shopping</button>
+            <button className="contBtn" onClick={() => navigate("/")}>
+              Continue Shopping
+            </button>
           </div>
         )}
 
-        {
-          cartItems.length > 0 
-          ? <div className="clearCart">
-          <button
-            onClick={() => {
-              clearCart();
-            }}
-          >
-            Clear Cart
-          </button>
-        </div> : null
-        } 
+        {cartItems.length > 0 ? (
+          <div className="clearCart">
+            <button
+              onClick={() => {
+                clearCart();
+              }}
+            >
+              Clear Cart
+            </button>
+          </div>
+        ) : null}
       </div>
 
-        <Recommended />
+      <Recommended />
 
-      {/* CART SUMMARY */}
       <div className="cart-bottom">
-        <div className="cart-total">
-          <h2>Cart Totals</h2>
+        <CartSummary />
 
-          <div className="cart-total-details">
-            <p>Subtotal</p>
-            <p>₹{getTotalCartAmount()}</p>
-          </div>
-          <hr />
-
-          <div className="cart-total-details">
-            <p>Delivery Fee</p>
-            <p>₹{getDeliveryFee()}</p>
-          </div>
-          <hr />
-
-          {discountAmount > 0 ? (
-            <>
-              <div className="cart-total-details">
-                <p>Promo Discount <button className="promoBtn" onClick={() => { promoBtn() }}>X</button></p>
-                <p>- ₹{discountAmount}</p>
-              </div>
-              <hr />
-            </>
-          ) : null}
-
-          <div className="cart-total-details">
-            <p>Total</p>
-            <p>₹{getFinalAmount()}</p>
-          </div>
-          <hr />
-
-          <button disabled={isDiabled} onClick={() => navigate("/order")}>
-            PROCEED TO CHECKOUT
-          </button>
-        </div>
-
-        {/* PROMO CODE */}
-        <div className="cart-promocode">
-          <p>If you have a promo code, enter it here</p>
-
-          <div className="cart-promocode-input">
-            <input
-              type="text"
-              placeholder="Promo code"
-              value={promoInput}
-              onChange={(e) => handleInputChange(e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
-            <button 
-            onClick={() => applyPromoCode()}
-            ref={buttonRef}
-            disabled={isApplyDisabled}
-            >Submit</button>
-          </div>
-
-          <div className="cart-promocode-info">
-            {discountAmount === 0 ? (
-              <div>
-                
-                <p>
-                  <IoInformationCircleOutline size={20} />
-                  Use code <span>SAVE50</span> to get ₹50 off, on Above ₹500.
-                </p>
-                <p>
-                  <IoInformationCircleOutline size={20} />
-                  Use code <span>SAVE100</span> to get ₹100 off, on Above ₹1000.
-                </p>
-              </div>
-              
-            ) : (
-              <>
-                <PiHandsClappingFill size={20} />
-                <p>
-                  Congratulations! You saved <span>₹{discountAmount}</span> on your order.
-                </p>
-              </>
-            )}
-          </div>
-        </div>
+        <PromoCode />
       </div>
     </div>
   );

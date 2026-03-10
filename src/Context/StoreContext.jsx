@@ -59,7 +59,7 @@ const StoreContextProvider = ({ children }) => {
     } finally {
       setFoodLoading(false);
     }
-  }, [url]);
+  }, []);
 
   // local storage mein cart items save karenge jab bhi cartItems change ho
   useEffect(() => {
@@ -93,9 +93,11 @@ const StoreContextProvider = ({ children }) => {
   };
 
   // delivery fee calculate karenge
-  const getDeliveryFee = () => {
-    return getTotalCartAmount() === 0 ? 0 : 99;
-  };
+ const getDeliveryFee = () => {
+  const total = getTotalCartAmount();
+  if (total === 0) return 0;
+  return total >= 999 ? 0 : 99;
+};
 
   // total cart amount calculate karenge
   const getFinalAmount = () => {

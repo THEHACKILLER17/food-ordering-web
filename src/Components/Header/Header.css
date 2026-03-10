@@ -1,11 +1,26 @@
 .header {
+  position: relative;
   height: 35vw;
   min-height: 220px;
   margin: 30px auto;
-  background: url('../../assets/header_img.png') no-repeat center center;
-  background-size: cover;
-  position: relative;
   border-radius: 10px;
+  overflow: hidden;
+  /* remove background-image from here */
+}
+
+.header-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.header-contents {
+  position: relative;
+  z-index: 1; /* sits above the image */
+  /* rest of your existing styles */
 }
 
 .header-contents {
