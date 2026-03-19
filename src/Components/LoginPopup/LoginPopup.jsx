@@ -3,6 +3,7 @@ import './LoginPopup.css'
 import { assets } from '../../assets/assets'
 import { StoreContext } from '../../Context/StoreContext'
 import axios from 'axios'
+import toast from 'react-hot-toast'
 
 const LoginPopup = ({ setShowLogin }) => {
 
@@ -42,13 +43,13 @@ const LoginPopup = ({ setShowLogin }) => {
                 localStorage.setItem("token", response.data.token)
                 localStorage.setItem("user", JSON.stringify(response.data.user))
                 setShowLogin(false)
-                alert(response.data.message)
+                toast.success(response.data.message)
             } else {
-                alert(response.data.message)
+                toast.error(response.data.message)
             }
         } catch (error) {
             console.error("Auth error:", error)
-            alert("Something went wrong. Please try again.")
+            toast.error("Something went wrong. Please try again.")
         } finally {
             setIsSubmitting(false)
         }

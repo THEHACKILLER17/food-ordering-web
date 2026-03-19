@@ -2,23 +2,36 @@ import { getPaymentStrategy } from "../services/paymentService";
 import { useContext } from "react";
 import { StoreContext } from "../../../Context/StoreContext";
 import useCheckout from "../hooks/useCheckout";
+import toast from "react-hot-toast";
 
 const PaymentProcessor = () => {
-  const { getFinalAmount } = useContext(StoreContext);
-  const { paymentMethod, validate, setOrderStatus } = useCheckout();
+  const { getFinalAmount, getCartItemsDetailed, user, clearCart, clearPromo } = useContext(StoreContext);
+  const { paymentMethod, validate, setOrderStatus, address } = useCheckout();
 
   const handlePayment = async () => {
+    if (!user) {
+    toast.error("Please login to place an order");
+    return;
+    };
     const validation = validate();
-    if (!validation.valid) { alert(validation.message); return; }
+    if (!validation.valid) { toast.error(validation.message); return; }
 
     const strategy = getPaymentStrategy(paymentMethod);
 
+    const orderData = {
+      userId: user?._id,
+      items: getCartItemsDetailed(),
+      address,
+    };
+
     try {
-      const result = await strategy.process(getFinalAmount());
+      const result = await strategy.process(getFinalAmount(), orderData);
       if (result?.redirected) return;
-      setOrderStatus("success"); // ← this triggers confirmation
+      clearCart();
+      clearPromo();
+      setOrderStatus("success");
     } catch (error) {
-      alert(error?.message || "Payment failed. Please try again.");
+      toast.error(error?.message || "Payment failed. Please try again.");
     }
   };
 

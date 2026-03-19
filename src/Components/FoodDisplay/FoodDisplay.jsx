@@ -14,6 +14,7 @@ const FoodDisplay = ({ category }) => {
     setSearchQuery,
     foodLoading,
     foodError,
+    fetchFoodList,
   } = useContext(StoreContext);
 
   const [loading, setLoading] = useState(true);

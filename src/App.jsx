@@ -7,6 +7,8 @@ import { useState } from "react";
 import LoginPopup from "./Components/LoginPopup/LoginPopup";
 import PlaceOrder1 from "./Pages/Checkout/PlaceOrder1";
 import { CheckoutProvider } from "./Pages/Checkout/context/CheckoutContext";
+import MyOrders from "./Pages/MyOrders/MyOrders";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -20,7 +22,16 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/order" element={<PlaceOrder1 />} />
+            <Route path="/order" element={
+              <ProtectedRoute setShowLogin={setShowLogin}>  
+                <PlaceOrder1 />
+              </ProtectedRoute>
+            } />
+            <Route path="/my-orders" element={
+              <ProtectedRoute setShowLogin={setShowLogin}>
+                <MyOrders />
+              </ProtectedRoute> 
+            } />
           </Routes>
         </CheckoutProvider>
       </div>

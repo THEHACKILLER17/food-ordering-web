@@ -9,6 +9,7 @@ import axios from "axios";
 import cartReducer from "./cartReducer";
 import storageService from "./storageService";
 import { applyPromo, calculateTotal, validatePromo } from "./cartService";
+import toast from "react-hot-toast";
 
 export const StoreContext = createContext(null);
 
@@ -141,7 +142,7 @@ const StoreContextProvider = ({ children }) => {
     const { valid } = validatePromo(code, total);
 
     if (!valid) {
-      alert(
+      toast.error(
         `Promo code ${code} is not applicable for the current total amount.`,
       );
       setPromoInput("");
@@ -152,7 +153,7 @@ const StoreContextProvider = ({ children }) => {
     setPromoCode(code);
     storageService.savePromoCode(code);
     setPromoInput("");
-    alert(`Promo code ${code} applied!`);
+    toast.success(`Promo code ${code} applied!`);
   };
 
   useEffect(() => {
@@ -163,10 +164,14 @@ const StoreContextProvider = ({ children }) => {
   }, []);
 
   const promoBtn = () => {
-    alert("Really! You want to remove the promo code?");
+    toast("Promo Code removed.", { icon: "🗑️" });
     setPromoCode("");
     storageService.clearPromoCode();
   };
+  const clearPromo = () => {
+  setPromoCode("");
+  storageService.clearPromoCode();
+};
 
   const isApplyDisabled = promoInput.trim() === "";
 
@@ -192,8 +197,7 @@ const StoreContextProvider = ({ children }) => {
 
     addToCart: (id) => dispatch({ type: "ADD_TO_CART", payload: id }),
     removeFromCart: (id) => dispatch({ type: "REMOVE_FROM_CART", payload: id }),
-    deleteCompletly: (id) =>
-      dispatch({ type: "DELETE_FROM_CART", payload: id }),
+    deleteCompletly: (id) =>dispatch({ type: "DELETE_FROM_CART", payload: id }),
     clearCart: () => dispatch({ type: "CLEAR_CART" }),
 
     searchQuery,
@@ -209,6 +213,7 @@ const StoreContextProvider = ({ children }) => {
     getDiscountAmount,
     promoInput,
     promoBtn,
+    clearPromo,
     isApplyDisabled,
     handleInputChange,
   };
