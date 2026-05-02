@@ -11,11 +11,11 @@ A full-stack food delivery web application built with the MERN stack. Supports t
 
 | Home | Cart & Recommendations |
 |------|----------------------|
-| ![Home](./screenshots/home.png) | ![Cart](./screenshots/cart.png) |
+| ![Home](home.png) | ![Cart](cart.png) |
 
 | Checkout | Order Confirmation |
 |----------|--------------------|
-| ![Checkout](./screenshots/checkout.png) | ![Confirmation](./screenshots/confirmation.png) |
+| ![Checkout](checkout.png) | ![Confirmation](confirmation.png) |
 
 ---
 
