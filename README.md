@@ -131,7 +131,7 @@ tomato/
 
 ## Author
 
-**Shaikh Zaid** — [GitHub](https://github.com/zaid-shaikh17) · [LinkedIn]([https://linkedin.com/in/your-profile](https://www.linkedin.com/in/shaikh-zaid-m8329981925/))
+**Shaikh Zaid** — [GitHub](https://github.com/zaid-shaikh17) · [LinkedIn](https://www.linkedin.com/in/shaikh-zaid-m8329981925/)
 
 ---
 
