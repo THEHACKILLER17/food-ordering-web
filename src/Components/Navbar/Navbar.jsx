@@ -84,14 +84,30 @@ const Navbar = ({ setShowLogin }) => {
             {showDropdown && (
               <div className="profile-dropdown">
                 <div className="profile-info">
-                  <p className="profile-name"><span>welcome</span> {user?.name}</p>
+                  <p className="profile-name">
+                    <span>welcome</span> {user?.name}
+                  </p>
                   <p className="profile-email">{user?.email}</p>
                 </div>
                 <hr />
-                <button onClick={(e) => {
-                  handleLogout();
-                  e.stopPropagation();
-                }} className="logout-btn">
+                <button
+                  className="dropdown-orders-btn"
+                  onClick={(e) => {
+                    navigate("/my-orders");
+                    setShowDropdown(false);
+                    e.stopPropagation();
+                  }}
+                >
+                  📦 My Orders
+                </button>
+                <hr />
+                <button
+                  onClick={(e) => {
+                    handleLogout();
+                    e.stopPropagation();
+                  }}
+                  className="logout-btn"
+                >
                   Logout
                 </button>
               </div>

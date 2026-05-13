@@ -179,6 +179,24 @@
     margin: 10px 0;
 }
 
+.dropdown-orders-btn {
+  width: 100%;
+  padding: 10px 15px;
+  background: #fff4f2;
+  color: tomato;
+  border: 1px solid #ffd5cc;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+.dropdown-orders-btn:hover {
+  background: #ffe8e3;
+}
+
 .logout-btn {
     width: 100%;
     padding: 10px 15px;

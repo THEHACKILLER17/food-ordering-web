@@ -1,23 +1,34 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
 import Home from "./Pages/Home/Home";
 import Cart from "./Pages/Cart/Cart";
 import Footer from "./Components/Footer/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginPopup from "./Components/LoginPopup/LoginPopup";
 import PlaceOrder1 from "./Pages/Checkout/PlaceOrder1";
 import { CheckoutProvider } from "./Pages/Checkout/context/CheckoutContext";
 import MyOrders from "./Pages/MyOrders/MyOrders";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import FloatingCart from "./Components/FloatingCart/FloatingCart";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [/order/.test(pathname) ? pathname : null]); // Only scroll to top on PlaceOrder1 page
+  return null;
+};  
+
   return (
     <>
+      <ScrollToTop />
       {showLogin ? <LoginPopup setShowLogin={setShowLogin} /> : <></>}
       <div className="app">
         <Navbar setShowLogin={setShowLogin} />
+        <FloatingCart />
         <CheckoutProvider>
           <Routes>
             <Route path="/" element={<Home />} />
